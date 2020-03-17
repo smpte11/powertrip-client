@@ -53,7 +53,10 @@ const defaultOptions = {
 // Call this in the Vue app file
 export function createProvider(options = {}) {
   // Create apollo client
-  const { apolloClient, wsClient } = createApolloClient({
+  const {
+    apolloClient,
+    wsClient
+  }: { apolloClient: any; wsClient: any } = createApolloClient({
     ...defaultOptions,
     ...options
   });
@@ -81,7 +84,7 @@ export function createProvider(options = {}) {
 }
 
 // Manually call this when user log in
-export async function onLogin(apolloClient, token) {
+export async function onLogin(apolloClient: any, token: any) {
   if (typeof localStorage !== "undefined" && token) {
     localStorage.setItem(AUTH_TOKEN, token);
   }
@@ -95,7 +98,7 @@ export async function onLogin(apolloClient, token) {
 }
 
 // Manually call this when user log out
-export async function onLogout(apolloClient) {
+export async function onLogout(apolloClient: any) {
   if (typeof localStorage !== "undefined") {
     localStorage.removeItem(AUTH_TOKEN);
   }

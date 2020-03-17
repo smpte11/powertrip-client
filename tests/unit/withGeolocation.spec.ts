@@ -1,20 +1,21 @@
-import { shallowMount } from "@vue/test-utils";
+import { render } from "@testing-library/vue";
 import { withGeolocation } from "@/components/enhancers";
 
-describe("HelloWorld.vue", () => {
-  it("should pass coordinates to children when available", () => {
-    const component = shallowMount(withGeolocation, {
+describe("withGeolocation", async () => {
+  it("should support geolocation", async () => {
+    const { getByText, findByTestId } = render(withGeolocation, {
       scopedSlots: {
-        default: "<p>{{props.coordinates.lat}}</p>"
+        default: '<span data-testid="coords">{{props.coordinates.lat}}</span>'
       }
     });
 
-    expect(component.html()).toMatch(/<p>(.*)<\/p>/);
-  });
+    // check default text while user is allowing geolocation
+    expect(
+      getByText("Unable to get your current location.")
+    ).toBeInTheDocument();
 
-  it("should show a help message when location is not available", () => {
-    const component = shallowMount(withGeolocation);
+    const slot = await findByTestId("coords");
 
-    expect(component.text()).toMatch(/Unable/);
+    expect(slot).toBeInTheDocument();
   });
 });

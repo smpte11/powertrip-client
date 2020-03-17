@@ -1,4 +1,4 @@
 export type LatLong = {
-  lat: number;
-  long: number;
+  lat?: number;
+  long?: number;
 };

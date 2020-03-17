@@ -1,8 +1,14 @@
 import Vue from "vue";
 import App from "./App.vue";
+
 import "./registerServiceWorker";
+
 import router from "./router";
+
 import { createProvider } from "./vue-apollo";
+
+import "./plugins/buefy";
+import "./plugins/composition";
 
 Vue.config.productionTip = false;
 
