@@ -32,15 +32,11 @@ export default Vue.extend({
 
   methods: {
     async setCoordinates() {
-      try {
-        const { coords } = await this.getCoordinates();
-        this.coordinates = Object.assign(
-          {},
-          { lat: coords.latitude, long: coords.longitude }
-        );
-      } catch (e) {
-        console.error(e);
-      }
+      const { coords } = await this.getCoordinates();
+      this.coordinates = Object.assign(
+        {},
+        { lat: coords.latitude, long: coords.longitude }
+      );
     },
 
     hasCoordinates(): boolean {

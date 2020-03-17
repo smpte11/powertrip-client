@@ -9,7 +9,7 @@ const routes = [
     path: "/day",
     name: "Day",
     component: Day
-  },
+  }
 ];
 
 const router = new VueRouter({

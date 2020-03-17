@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vue/composition-api": "^0.4.0",
+    "apollo-boost": "^0.4.7",
     "buefy": "^0.8.13",
     "core-js": "^3.6.4",
     "date-fns": "^2.11.0",
