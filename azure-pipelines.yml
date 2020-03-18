@@ -1,0 +1,20 @@
+name: CI/CD Frontend
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildDist
+        steps:
+          - script: echo Starting build!
+
+  - stage: Test
+    jobs:
+      - job: RunUnitTests
+        steps:
+          - script: echo Running tests
+
+  - stage: Deploy
+    jobs:
+      - job: DeployToStorage
+        steps:
+          - script: echo Deploying...
