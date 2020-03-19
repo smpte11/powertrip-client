@@ -13,8 +13,3 @@ stages:
         steps:
           - script: echo Running tests
 
-  - stage: Deploy
-    jobs:
-      - job: DeployToStorage
-        steps:
-          - script: echo Deploying...
