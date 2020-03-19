@@ -35,11 +35,12 @@ stages:
               npm run build
           - task: CopyFiles@2
             inputs:
-              Contents: '$(Build.SourcesDirectory)/dist'
-              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+              Contents: $(Build.SourcesDirectory)/dist/**
+              TargetFolder: $(Build.ArtifactStagingDirectory)
           - task: ArchiveFiles@2
             inputs:
-              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+              rootFolderOrFile: $(Build.ArtifactStagingDirectory)/dist
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              PathtoPublish: $(Build.ArtifactStagingDirectory)
