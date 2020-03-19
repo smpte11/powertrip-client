@@ -10,11 +10,36 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - stage: Test
-    displayName: Running unit tests
+  - stage: Test and Build
     jobs:
       - job: Test
+        displayName: Running unit tests
         steps:
           - script: |
               npm install
               npm run test:unit --ci --reporters=default --reporters=jest-junit
+          - task: PublishTestResults@2
+            condition: succeededOrFailed()
+            inputs:
+              testRunner: JUnit
+              testResultsFiles: '**/junit.xml'
+
+      - job: Build
+        displayName: Deploying to Prod
+        container: ubuntu:latest
+        dependsOn: Test
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        steps:
+          - script: |
+              npm install
+              npm run build
+          - task: CopyFiles@2
+            inputs:
+              Contents: '$(Build.SourcesDirectory)/dist'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+          - task: ArchiveFiles@2
+            inputs:
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
