@@ -1,7 +1,7 @@
 import { render } from "@testing-library/vue";
 import { withGeolocation } from "@/components/enhancers";
 
-describe("withGeolocation", async () => {
+describe("withGeolocation", () => {
   it("should support geolocation", async () => {
     const { getByText, findByTestId } = render(withGeolocation, {
       scopedSlots: {

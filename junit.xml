@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="1" failures="0" time="4.453">
+  <testsuite name="withGeolocation" errors="0" failures="0" skipped="0" timestamp="2020-03-19T09:09:16" time="2.872" tests="1">
+    <testcase classname="withGeolocation should support geolocation" name="withGeolocation should support geolocation" time="0.047">
+    </testcase>
+  </testsuite>
+</testsuites>

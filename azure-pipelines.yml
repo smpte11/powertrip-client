@@ -1,15 +1,14 @@
-name: CI/CD Frontend
+name: frontend_$(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
-stages:
-  - stage: Build
-    jobs:
-      - job: BuildDist
-        steps:
-          - script: echo Starting build!
+trigger:
+  branches:
+    include:
+      - master
 
-  - stage: Test
-    jobs:
-      - job: RunUnitTests
-        steps:
-          - script: echo Running tests
+pool:
+  vmImage: 'ubuntu-latest'
 
+steps:
+  - script: |
+      npm install
+      npm run test:unit --ci --reporters=default --reporters=jest-junit
