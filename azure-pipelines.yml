@@ -4,11 +4,17 @@ trigger:
   branches:
     include:
       - master
+      - feature/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - script: |
-      npm install
-      npm run test:unit --ci --reporters=default --reporters=jest-junit
+stages:
+  - stage: Test
+    displayName: Running unit tests
+    jobs:
+      - job: Test
+        steps:
+          - script: |
+              npm install
+              npm run test:unit --ci --reporters=default --reporters=jest-junit
