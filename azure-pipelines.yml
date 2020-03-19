@@ -25,8 +25,8 @@ stages:
               testResultsFiles: '**/junit.xml'
 
       - job: Build
-        displayName: Deploying to Prod
-        container: ubuntu:latest
+        displayName: Build
+        container: node:lts
         dependsOn: Test
         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         steps:
