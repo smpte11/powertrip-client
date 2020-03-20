@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-  - stage: TestAndBuild
+  - stage: Test
     jobs:
       - job: Test
         displayName: Running unit tests
@@ -25,9 +25,11 @@ stages:
               testRunner: JUnit
               testResultsFiles: '**/junit.xml'
 
+  - stage: Build
+    dependsOn: Test
+    jobs:
       - job: Build
-        displayName: Build
-        dependsOn: Test
+        displayName: Build Powertrip Frontend
         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         steps:
           - script: |
@@ -44,3 +46,32 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: $(Build.ArtifactStagingDirectory)
+
+  - stage: Deploy
+    dependsOn: Build
+    displayName: Deploy Powertrip Frontend
+    jobs:
+      - job: DeploySPA
+        displayName: Deploy Powertrip Frontend Job
+        pool:
+          vmImage: windows-latest
+        steps:
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'specific'
+              itemPattern: 'drop/**'
+              downloadPath: '$(System.ArtifactsStagingDirectory)'
+          - task: ExtractFiles@1
+            displayName: 'Extract files '
+            inputs:
+              archiveFilePatterns: '**/$(Build.BuildId).zip'
+              destinationFolder: '$(System.DefaultWorkingDirectory)/$(Build.BuildId)'
+          - task: AzureFileCopy@3
+            displayName: 'Copy to Blob'
+            inputs:
+              SourcePath: '$(System.DefaultWorkingDirectory)/$(Build.BuildId)/dist'
+              azureSubscription: 'Pay-As-You-Go (46c3f0fc-e27c-4325-b79a-edcac2dd8a85)'
+              Destination: AzureBlob
+              storage: powertripfrontendsa
+              ContainerName: '$web'
