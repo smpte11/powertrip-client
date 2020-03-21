@@ -19,7 +19,10 @@ stages:
           - script: |
               npm install
               npm run test:unit --ci --reporters=default --reporters=jest-junit
+            displayName: Run unit tests
+
           - task: PublishTestResults@2
+            displayName: Publish tests resutls
             condition: succeededOrFailed()
             inputs:
               testRunner: JUnit
@@ -35,15 +38,28 @@ stages:
           - script: |
               npm install
               npm run build
+            displayName: Building production app
+
           - task: CopyFiles@2
+            displayName: Copy files to Staging directory
+            name: Copy
             inputs:
               Contents: $(Build.SourcesDirectory)/dist/**
               TargetFolder: $(Build.ArtifactStagingDirectory)
+
           - task: ArchiveFiles@2
+            displayName: Create archive of dist folder
+            name: Archive
             inputs:
               rootFolderOrFile: $(Build.ArtifactStagingDirectory)/dist
               archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+
+          - script: rm -rf $(Build.ArtifactStagingDirectory)/dist
+            displayName: Clean staging directoy
+            name: Clean
+
           - task: PublishBuildArtifacts@1
+            displayName: Publish archive to next step
             inputs:
               PathtoPublish: $(Build.ArtifactStagingDirectory)
 
