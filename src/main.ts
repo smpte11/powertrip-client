@@ -12,11 +12,14 @@ import router from "./router";
 import "./plugins/buefy";
 import "./plugins/composition";
 import VueApollo from "vue-apollo";
+import buildConfig from "./config";
 
 Vue.config.productionTip = false;
 
+const config = buildConfig();
+
 const apolloClient = new ApolloClient({
-  uri: "http://localhost:7071/graphql"
+  uri: config.apiUrl
 });
 
 const apolloProvider = new VueApollo({
