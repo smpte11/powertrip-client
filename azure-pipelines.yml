@@ -40,13 +40,6 @@ stages:
               npm run build
             displayName: Building production app
 
-          - task: CopyFiles@2
-            displayName: Copy files to Staging directory
-            name: Copy
-            inputs:
-              Contents: $(Build.SourcesDirectory)/dist/**
-              TargetFolder: $(Build.ArtifactStagingDirectory)
-
           - task: ArchiveFiles@2
             displayName: Create archive of dist folder
             name: Archive
@@ -58,7 +51,7 @@ stages:
             displayName: Clean staging directoy
             name: Clean
 
-          - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             artifact: drop
 
   - stage: Deploy
@@ -74,12 +67,9 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: DownloadBuildArtifacts@0
-                  inputs:
-                    buildType: 'current'
-                    downloadType: 'specific'
-                    itemPattern: 'drop/**'
-                    downloadPath: '$(System.ArtifactsStagingDirectory)'
+                - download: current
+                  artifact: drop
+                  patterns: '**/*.zip'
                 - task: ExtractFiles@1
                   displayName: 'Extract files '
                   inputs:
