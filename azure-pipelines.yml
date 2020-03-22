@@ -41,18 +41,13 @@ stages:
             displayName: Building production app
 
           - task: ArchiveFiles@2
-            displayName: Create archive of dist folder
-            name: Archive
+            displayName: Create archive of dist
             inputs:
-              rootFolderOrFile: $(Build.ArtifactStagingDirectory)/dist
-              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-
-          - script: rm -rf $(Build.ArtifactStagingDirectory)/dist
-            displayName: Clean staging directoy
-            name: Clean
+              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 
           - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-            artifact: drop
+            artifact: frontend
 
   - stage: Deploy
     displayName: Deploy Powertrip Frontend
@@ -68,12 +63,16 @@ stages:
             deploy:
               steps:
                 - download: current
-                  artifact: drop
+                  artifact: frontend
                   patterns: '**/*.zip'
+                
+                - script: |
+                    ls -la $(Pipeline.Workspace)/frontend
+
                 - task: ExtractFiles@1
                   displayName: 'Extract files '
                   inputs:
-                    archiveFilePatterns: '**/$(Build.BuildId).zip'
+                    archiveFilePatterns: '$(Pipeline.Workspace)/frontend/$(Build.BuildId).zip'
                     destinationFolder: '$(System.DefaultWorkingDirectory)/$(Build.BuildId)'
                 - task: AzureFileCopy@3
                   displayName: 'Copy to Blob'
