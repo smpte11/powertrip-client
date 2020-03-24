@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { withGeolocation } from "@/components/enhancers";
-import { PWeather } from "@/components/common";
+import { PWeather } from "@/components/weather";
 
 export default {
   name: "day-weather",

@@ -1,6 +1,6 @@
 <template>
   <apollo-query
-    :query="require('../day/queries').default"
+    :query="require('../weather/queries').default"
     :variables="{
       lat: coordinates.lat,
       long: coordinates.long
@@ -9,15 +9,15 @@
     <template v-slot="{ result: { loading, data } }">
       <div v-if="loading"></div>
       <div v-else-if="data">
-        <p-weather-icon :icon="data.day.weather.icon"></p-weather-icon>
-        <p>{{ data.day.weather.summary }}</p>
+        <p-weather-icon :icon="data.weather.icon"></p-weather-icon>
+        <p>{{ data.weather.summary }}</p>
       </div>
     </template>
   </apollo-query>
 </template>
 
 <script lang="ts">
-import PWeatherIcon from "@/components/common/PWeatherIcon.vue";
+import PWeatherIcon from "@/components/weather/PWeatherIcon.vue";
 
 import { LatLong } from "../enhancers/"; // eslint-disable-line no-unused-vars
 
@@ -41,9 +41,7 @@ interface Weather {
 
 interface Data {
   domain: string;
-  day: {
-    weather: Weather;
-  };
+  weather: Weather;
 }
 
 export default {

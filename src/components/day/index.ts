@@ -1,4 +1,4 @@
 // Components
-export { default as DayLayout } from "./DayLayout.vue";
-export { default as DayWeather } from "./DayWeather.vue";
-export { default as DayOverview } from "./DayOverview.vue";
+export { default as PDayLayout } from "./PDayLayout.vue";
+export { default as PDayWeather } from "./PDayWeather.vue";
+export { default as PDayOverview } from "./PDayOverview.vue";

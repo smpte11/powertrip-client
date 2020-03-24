@@ -1,22 +1,22 @@
 <template>
-  <day-layout>
+  <p-day-layout>
     <template #overview>
-      <day-overview />
+      <p-day-overview />
     </template>
     <template #summary>
-      <day-weather />
+      <p-day-weather />
       <b-button rounded type="is-primary" icon-left="plus" class="is-fullwidth"
         >Add new activity</b-button
       >
     </template>
-  </day-layout>
+  </p-day-layout>
 </template>
 
 <script lang="ts">
-import { DayWeather, DayOverview, DayLayout } from "@/components/day";
+import { PDayWeather, PDayOverview, PDayLayout } from "@/components/day";
 
 export default {
-  components: { DayWeather, DayOverview, DayLayout }
+  components: { PDayWeather, PDayOverview, PDayLayout }
 };
 </script>
 

@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 
 (global as any).navigator.geolocation = {
   clearWatch: jest.fn(),
-  getCurrentPosition: jest.fn((success, failure, options) => {
+  getCurrentPosition: jest.fn(success => {
     success({
       coords: {
         longitude: 60,
