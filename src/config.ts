@@ -1,30 +1,20 @@
 import { match } from "./fp";
 
 export interface Configurable {
-  readonly host: string;
-  readonly port?: number;
+  readonly apiUrl: string;
 }
 
 enum ENVIRONMENTS {
   DEV = "development",
-  PROD = "production"
+  PROD = "production",
 }
 
 class Config implements Configurable {
-  host = "http://localhost";
-  port = 4000;
-
-  public get apiUrl(): string {
-    return `${this.host}:${this.port}`;
-  }
+  apiUrl = "http://localhost:4000/graphql";
 }
 
 class ProdConfig extends Config {
-  host = "https://powertrip-api-gateway.azurewebsites.net/";
-
-  public get apiUrl(): string {
-    return this.host;
-  }
+  apiUrl = "https://powertrip-api-gateway.azurewebsites.net/graphql";
 }
 
 function buildConfig(): Config {

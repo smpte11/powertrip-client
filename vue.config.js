@@ -3,7 +3,7 @@ module.exports = {
   productionSourceMap: false,
   pluginOptions: {
     apollo: {
-      lintGQL: false
-    }
-  }
+      lintGQL: false,
+    },
+  },
 };

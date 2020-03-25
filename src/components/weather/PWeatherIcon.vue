@@ -13,7 +13,7 @@ interface Props {
 export default createComponent({
   name: "p-weather-icon",
   props: {
-    icon: String
+    icon: String,
   },
   setup(props: Props) {
     onMounted(() => {
@@ -21,6 +21,6 @@ export default createComponent({
       skycons.add("p-weather-icon", props.icon as IconKey);
       skycons.play();
     });
-  }
+  },
 });
 </script>

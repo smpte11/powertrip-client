@@ -18,8 +18,8 @@ import { format } from "date-fns";
 export default {
   data() {
     return {
-      today: format(new Date(), "yyyy-MM-dd")
+      today: format(new Date(), "yyyy-MM-dd"),
     };
-  }
+  },
 };
 </script>

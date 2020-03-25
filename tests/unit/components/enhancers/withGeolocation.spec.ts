@@ -5,8 +5,8 @@ describe("withGeolocation", () => {
   it("should support geolocation", async () => {
     const { getByText, findByTestId } = render(withGeolocation, {
       scopedSlots: {
-        default: '<span data-testid="coords">{{props.coordinates.lat}}</span>'
-      }
+        default: '<span data-testid="coords">{{props.coordinates.lat}}</span>',
+      },
     });
 
     // check default text while user is allowing geolocation

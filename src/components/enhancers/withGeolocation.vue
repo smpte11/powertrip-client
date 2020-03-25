@@ -21,8 +21,8 @@ export default Vue.extend({
     return {
       coordinates: {
         lat: undefined,
-        long: undefined
-      }
+        long: undefined,
+      },
     };
   },
 
@@ -40,7 +40,7 @@ export default Vue.extend({
     },
 
     hasCoordinates(): boolean {
-      return Object.values(this.coordinates).every(value => value);
+      return Object.values(this.coordinates).every((value) => value);
     },
 
     getCoordinates() {
@@ -50,10 +50,10 @@ export default Vue.extend({
         }
         navigator.geolocation.getCurrentPosition(resolve, reject, {
           timeout: 10000,
-          enableHighAccuracy: true
+          enableHighAccuracy: true,
         });
       });
-    }
-  }
+    },
+  },
 });
 </script>

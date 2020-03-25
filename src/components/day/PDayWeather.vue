@@ -12,10 +12,9 @@ import { withGeolocation } from "@/components/enhancers";
 import { PWeather } from "@/components/weather";
 
 export default {
-  name: "day-weather",
   components: {
     withGeolocation,
-    PWeather
-  }
+    PWeather,
+  },
 };
 </script>

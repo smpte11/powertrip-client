@@ -1,9 +1,18 @@
 <template>
   <apollo-query
-    :query="require('../weather/queries').default"
+    :query="
+      (gql) => gql`
+        query WeatherQuery($lat: Float!, $long: Float!) {
+          weather(lat: $lat, long: $long) {
+            icon
+            summary
+          }
+        }
+      `
+    "
     :variables="{
       lat: coordinates.lat,
-      long: coordinates.long
+      long: coordinates.long,
     }"
   >
     <template v-slot="{ result: { loading, data } }">
@@ -48,14 +57,14 @@ export default {
   name: "p-weather",
 
   components: {
-    PWeatherIcon
+    PWeatherIcon,
   },
 
   props: {
     coordinates: {
       type: Object as () => LatLong,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>

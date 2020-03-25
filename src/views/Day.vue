@@ -16,7 +16,7 @@
 import { PDayWeather, PDayOverview, PDayLayout } from "@/components/day";
 
 export default {
-  components: { PDayWeather, PDayOverview, PDayLayout }
+  components: { PDayWeather, PDayOverview, PDayLayout },
 };
 </script>
 
