@@ -77,4 +77,8 @@ $bulmaswatch-import-font: true !default;
 @import "~bulma/sass/utilities/_all";
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
+
+////////////////////////////////////////////////
+// V-CALENDAR
+////////////////////////////////////////////////
 </style>

@@ -10,6 +10,8 @@ import { createProvider } from "./vue-apollo";
 
 import "./plugins/buefy";
 import "./plugins/composition";
+import "./plugins/vcalendar";
+
 import buildConfig from "./config";
 
 Vue.config.productionTip = false;
