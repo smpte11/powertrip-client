@@ -1,9 +1,9 @@
 <template>
   <p-day-layout>
-    <template #overview>
+    <template #header>
       <p-day-overview />
     </template>
-    <template #summary>
+    <template #body>
       <p-day-weather />
       <b-button rounded type="is-primary" icon-left="plus" class="is-fullwidth"
         >Add new activity</b-button

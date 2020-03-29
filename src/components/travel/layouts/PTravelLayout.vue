@@ -3,10 +3,10 @@
     class="day columns is-flex is-paddingless is-marginless has-background-primary"
   >
     <div class="column header">
-      <slot name="header"></slot>
+      <slot name="header" />
     </div>
-    <div class="column summary has-background-light">
-      <slot name="body"></slot>
+    <div class="column summary has-background-dark">
+      <slot name="body" />
     </div>
   </div>
 </template>

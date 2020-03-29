@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Day from "../views/Day.vue";
+import PDay from "@/components/day/PDay.vue";
+import PTravel from "@/components/travel/views/PTravel.vue";
 
 Vue.use(VueRouter);
 
@@ -8,7 +9,12 @@ const routes = [
   {
     path: "/day",
     name: "Day",
-    component: Day,
+    component: PDay,
+  },
+  {
+    path: "/travels",
+    name: "Travels",
+    component: PTravel,
   },
 ];
 
