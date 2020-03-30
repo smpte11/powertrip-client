@@ -1,26 +1,50 @@
 <template>
   <p-travel-layout>
     <template #header>
-      <h1 class="subtitle is-1 has-text-light is-marginless">Travels</h1>
+      <p-nav>
+        <template #left>
+          <button class="rounded inline-flex items-center h-8 w-8">
+            <icon height="1.5rem" width="1.5rem" icon="icon-menu"></icon>
+          </button>
+        </template>
+        <template #right>
+          <button
+            class="rounded inline-flex justify-center items-center bg-gray-300 rounded-full h-8 w-8"
+          >
+            <icon height="1.5rem" width="1.5rem" icon="icon-user"></icon>
+          </button>
+        </template>
+      </p-nav>
     </template>
     <template #body>
-      <div class="columns">
-        <div class="column">
-          <p-card>
-            <b-icon size="is-large" icon="plus"></b-icon>
-          </p-card>
+      <p-search></p-search>
+      <div
+        class="flex justify-between bg-white rounded shadow border-0 p-3 my-3"
+      >
+        <div class="text-left">
+          <h2 class="text-xl text-gray-700">Where to next?</h2>
+          <p class="text-gray-700">Plan your next adventure...</p>
         </div>
+        <button
+          class="self-center rounded inline-flex justify-center items-center bg-gray-300 rounded-full h-8 w-8"
+        >
+          <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
+        </button>
       </div>
     </template>
   </p-travel-layout>
 </template>
 
 <script lang="ts">
-import { PCard } from "@/components/conmmon";
+import { PNav, PSearch } from "@/components/ui";
 import { PTravelLayout } from "@/components/travel/layouts";
 
+import "@/assets/svg/icon-menu";
+import "@/assets/svg/icon-plus";
+import "@/assets/svg/icon-user";
+
 export default {
-  components: { PCard, PTravelLayout },
+  components: { PNav, PSearch, PTravelLayout },
 };
 </script>
 

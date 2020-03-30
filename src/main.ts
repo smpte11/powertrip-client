@@ -8,11 +8,13 @@ import router from "./router";
 
 import { createProvider } from "./vue-apollo";
 
-import "./plugins/buefy";
 import "./plugins/composition";
+import "./plugins/icons";
 import "./plugins/vcalendar";
 
 import buildConfig from "./config";
+
+import "@/assets/css/index.css";
 
 Vue.config.productionTip = false;
 

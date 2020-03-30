@@ -22,6 +22,7 @@
     "vue-router": "^3.1.6"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.1.0",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/vue": "^5.0.2",
     "@types/jest": "^25.1.4",
@@ -45,8 +46,10 @@
     "prettier": "^2.0.2",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
+    "tailwindcss": "^1.2.0",
     "typescript": "~3.8.3",
     "vue-cli-plugin-apollo": "~0.21.3",
+    "vue-svgicon": "^3.2.6",
     "vue-template-compiler": "^2.6.11"
   }
 }
