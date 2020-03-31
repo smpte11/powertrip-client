@@ -3,16 +3,14 @@
     <template #header>
       <p-nav>
         <template #left>
-          <button class="rounded inline-flex items-center h-8 w-8">
+          <p-button :clickHandler="() => {}">
             <icon height="1.5rem" width="1.5rem" icon="icon-menu"></icon>
-          </button>
+          </p-button>
         </template>
         <template #right>
-          <button
-            class="rounded inline-flex justify-center items-center bg-gray-300 rounded-full h-8 w-8"
-          >
+          <p-button class="bg-gray-300" :clickHandler="() => {}">
             <icon height="1.5rem" width="1.5rem" icon="icon-user"></icon>
-          </button>
+          </p-button>
         </template>
       </p-nav>
     </template>
@@ -25,18 +23,16 @@
           <h2 class="text-xl text-gray-700">Where to next?</h2>
           <p class="text-gray-700">Plan your next adventure...</p>
         </div>
-        <button
-          class="self-center rounded inline-flex justify-center items-center bg-gray-300 rounded-full h-8 w-8"
-        >
+        <p-button class="bg-gray-300" :clickHandler="() => {}">
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
-        </button>
+        </p-button>
       </div>
     </template>
   </p-travel-layout>
 </template>
 
 <script lang="ts">
-import { PNav, PSearch } from "@/components/ui";
+import { PButton, PNav, PSearch } from "@/components/ui";
 import { PTravelLayout } from "@/components/travel/layouts";
 
 import "@/assets/svg/icon-menu";
@@ -44,7 +40,7 @@ import "@/assets/svg/icon-plus";
 import "@/assets/svg/icon-user";
 
 export default {
-  components: { PNav, PSearch, PTravelLayout },
+  components: { PButton, PNav, PSearch, PTravelLayout },
 };
 </script>
 
