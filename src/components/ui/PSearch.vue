@@ -1,10 +1,6 @@
 <template functional>
   <div class="relative w-full">
-    <input
-      type="search"
-      class="shadow rounded border-0 p-3 w-full"
-      placeholder="Search by name..."
-    />
+    <p-input is-full type="search" placeholder="Search by name..." />
     <div class="absolute right-0 top-0 mt-3 mr-4">
       <icon class="h-4 text-gray-400" icon="icon-search"> </icon>
     </div>

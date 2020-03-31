@@ -23,7 +23,7 @@
           <h2 class="text-xl text-gray-700">Where to next?</h2>
           <p class="text-gray-700">Plan your next adventure...</p>
         </div>
-        <p-button class="bg-gray-300" :clickHandler="() => {}">
+        <p-button class="bg-gray-300" :clickHandler="newTravel">
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
       </div>
@@ -41,6 +41,12 @@ import "@/assets/svg/icon-user";
 
 export default {
   components: { PButton, PNav, PSearch, PTravelLayout },
+
+  methods: {
+    newTravel: function () {
+      this.$router.push("new-travel");
+    },
+  },
 };
 </script>
 

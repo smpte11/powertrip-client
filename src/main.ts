@@ -12,6 +12,8 @@ import "./plugins/composition";
 import "./plugins/icons";
 import "./plugins/vcalendar";
 
+import "./globalComponent";
+
 import buildConfig from "./config";
 
 import "@/assets/css/index.css";
