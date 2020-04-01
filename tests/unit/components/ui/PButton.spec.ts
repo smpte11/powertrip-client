@@ -7,6 +7,9 @@ describe("Button component", () => {
       slots: {
         default: "This is a test",
       },
+      props: {
+        clickHandler: () => {},
+      },
     });
 
     expect(getByText("This is a test")).toBeInTheDocument();

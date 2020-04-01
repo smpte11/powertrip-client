@@ -9,25 +9,25 @@
         </template>
       </p-nav>
     </template>
-    <template #body>
-      <fieldset>
-        <p-input
-          is-full
-          label="What's the name of your trip?"
-          placeholder="Ex. Trip to Madrid"
-        ></p-input>
-      </fieldset>
 
-      <fieldset>
+    <template #body>
+      <h1 class="h1 font-bold text-gray-700">Tell us about your travel</h1>
+      <p-input
+        is-full
+        label="What's the name of your trip?"
+        placeholder="Ex. Trip to Madrid"
+      ></p-input>
+
+      <div class="mb-4">
         <label for="dates" class="block text-gray-700 text-sm font-bold mb-2"
           >How long will it be?</label
         >
         <!-- Add wrapper -->
-        <v-calendar is-expanded :rows="2"></v-calendar>
-      </fieldset>
-      <p-button class="bg-blue-500 rounded" :clickHandler="() => {}"
-        >Create</p-button
-      >
+        <p-calendar></p-calendar>
+      </div>
+    </template>
+    <template #footer>
+      <p-button class="bg-primary" :clickHandler="() => {}">Create</p-button>
     </template>
   </p-travel-layout>
 </template>

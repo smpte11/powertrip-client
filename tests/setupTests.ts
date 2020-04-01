@@ -13,3 +13,13 @@ import "@testing-library/jest-dom";
   stopObserving: jest.fn(),
   watchPosition: jest.fn(),
 };
+
+(global as any).matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {},
+    };
+  };

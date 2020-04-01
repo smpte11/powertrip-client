@@ -3,12 +3,12 @@
     <template #header>
       <p-nav>
         <template #left>
-          <p-button :clickHandler="() => {}">
+          <p-button class="pl-0" :clickHandler="() => {}">
             <icon height="1.5rem" width="1.5rem" icon="icon-menu"></icon>
           </p-button>
         </template>
         <template #right>
-          <p-button rounded class="bg-gray-300" :clickHandler="() => {}">
+          <p-button class="pr-0" rounded :clickHandler="() => {}">
             <icon height="1.5rem" width="1.5rem" icon="icon-user"></icon>
           </p-button>
         </template>
@@ -23,7 +23,7 @@
           <h2 class="text-xl text-gray-700">Where to next?</h2>
           <p class="text-gray-700">Plan your next adventure...</p>
         </div>
-        <p-button rounded class="bg-gray-300" :clickHandler="toNewTravel">
+        <p-button rounded :clickHandler="toNewTravel">
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
       </div>
@@ -52,8 +52,6 @@ export default defineComponent({
       toNewTravel,
     };
   },
-
-  methods: {},
 });
 </script>
 

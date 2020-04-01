@@ -1,19 +1,7 @@
 <template functional>
   <button
-    class="self-center inline-flex justify-center items-center"
-    :class="[
-      {
-        'w-full': props.expanded,
-        'rounded-full': props.rounded,
-        'h-8': props.rounded,
-        'w-8': props.rounded,
-      },
-      props.rounded ? 'px-0' : 'px-4',
-      props.rounded ? 'py-0' : 'py-3',
-      props.rounded ? 'mx-4' : 'mx-0',
-      props.rounded ? 'my-3' : 'my-0',
-      data.staticClass,
-    ]"
+    class="text-gray-800 font-bold py-2 px-3 rounded-full inline-flex items-center"
+    :class="[data.staticClass]"
     @click="props.clickHandler"
   >
     <slot></slot>
