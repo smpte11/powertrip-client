@@ -1,5 +1,5 @@
 <template functional>
-  <div class="flex justify-between px-1 py-4">
+  <div class="flex justify-between items-center pt-1 pb-3">
     <div>
       <slot name="left"></slot>
     </div>

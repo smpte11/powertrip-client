@@ -3,14 +3,14 @@
 </template>
 
 <script lang="ts">
-import { createComponent, onMounted } from "@vue/composition-api";
+import { defineComponent, onMounted } from "@vue/composition-api";
 import { Skycons, IconKey } from "skycons-ts";
 
 interface Props {
   icon: string;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "p-weather-icon",
   props: {
     icon: String,
