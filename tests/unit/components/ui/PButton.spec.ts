@@ -3,7 +3,7 @@ import { PButton } from "@/components/ui";
 
 describe("Button component", () => {
   it("should render properly", () => {
-    const { getByText, queryByTestId } = render(PButton, {
+    const { getByText } = render(PButton, {
       slots: {
         default: "This is a test",
       },

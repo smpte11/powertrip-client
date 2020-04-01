@@ -1,7 +1,20 @@
-<template>
+<template functional>
   <button
-    class="self-center rounded inline-flex justify-center items-center rounded-full h-8 w-8"
-    @click="clickHandler"
+    class="self-center inline-flex justify-center items-center"
+    :class="[
+      {
+        'w-full': props.expanded,
+        'rounded-full': props.rounded,
+        'h-8': props.rounded,
+        'w-8': props.rounded,
+      },
+      props.rounded ? 'px-0' : 'px-4',
+      props.rounded ? 'py-0' : 'py-3',
+      props.rounded ? 'mx-4' : 'mx-0',
+      props.rounded ? 'my-3' : 'my-0',
+      data.staticClass,
+    ]"
+    @click="props.clickHandler"
   >
     <slot></slot>
   </button>
@@ -11,9 +24,13 @@
 export default {
   props: {
     clickHandler: Function,
-    icon: {
-      type: String,
-      required: false,
+    expanded: {
+      type: Boolean,
+      default: false,
+    },
+    rounded: {
+      type: Boolean,
+      default: false,
     },
   },
 };
