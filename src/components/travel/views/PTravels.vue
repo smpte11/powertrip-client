@@ -8,7 +8,7 @@
           </p-button>
         </template>
         <template #right>
-          <p-button class="bg-gray-300" :clickHandler="() => {}">
+          <p-button rounded class="bg-gray-300" :clickHandler="() => {}">
             <icon height="1.5rem" width="1.5rem" icon="icon-user"></icon>
           </p-button>
         </template>
@@ -23,7 +23,7 @@
           <h2 class="text-xl text-gray-700">Where to next?</h2>
           <p class="text-gray-700">Plan your next adventure...</p>
         </div>
-        <p-button class="bg-gray-300" :clickHandler="newTravel">
+        <p-button rounded class="bg-gray-300" :clickHandler="toNewTravel">
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
       </div>
@@ -32,22 +32,29 @@
 </template>
 
 <script lang="ts">
-import { PButton, PNav, PSearch } from "@/components/ui";
+import { defineComponent } from "@vue/composition-api";
+
 import { PTravelLayout } from "@/components/travel/layouts";
 
 import "@/assets/svg/icon-menu";
 import "@/assets/svg/icon-plus";
 import "@/assets/svg/icon-user";
 
-export default {
-  components: { PButton, PNav, PSearch, PTravelLayout },
+export default defineComponent({
+  components: { PTravelLayout },
 
-  methods: {
-    newTravel: function () {
-      this.$router.push("new-travel");
-    },
+  setup(props, ctx) {
+    function toNewTravel() {
+      ctx.root.$router.push("new-travel");
+    }
+
+    return {
+      toNewTravel,
+    };
   },
-};
+
+  methods: {},
+});
 </script>
 
 <style lang="scss">
