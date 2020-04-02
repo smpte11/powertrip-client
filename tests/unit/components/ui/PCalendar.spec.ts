@@ -1,9 +1,8 @@
 import CompositionApi from "@vue/composition-api";
 import VCalendar from "v-calendar";
 
-import { createLocalVue } from "@vue/test-utils";
-import { render, fireEvent } from "@testing-library/vue";
-import { format } from "date-fns";
+import { createLocalVue, mount } from "@vue/test-utils";
+import { addDays, format, isEqual } from "date-fns";
 
 import { PCalendar } from "@/components/ui";
 
@@ -20,17 +19,21 @@ localVue.use(VCalendar, {
 describe("Calendar component", () => {
   it("should select a simple range", () => {
     const today = new Date();
+    const endDate = addDays(today, 7);
 
-    const { debug, getAllByTestId, getByLabelText } = render(PCalendar, {
+    const wrapper = mount(PCalendar, {
       localVue,
-      scopedSlots: {
-        "day-content": '<div data-testid="day"></div>',
-      },
     });
 
-    const [head] = getAllByTestId("day");
-    console.log(head);
+    const from = wrapper.find(`.id-${format(today, "yyyy-MM-dd")}`);
+    const to = wrapper.find(`.id-${format(endDate, "yyyy-MM-dd")}`);
 
-    console.log(format(today, "eeee, d MMMM Y"));
+    from.vm.$emit("dayclick", { date: today });
+    // to.trigger("click");
+
+    const { start, end } = wrapper.vm.$data.attributes[0].dates;
+
+    expect(isEqual(start, today)).toBeTruthy();
+    expect(isEqual(end, endDate)).toBeTruthy();
   });
 });

@@ -3,7 +3,7 @@
     <v-calendar
       is-expanded
       :rows="rows"
-      :attributes="state.attributes"
+      :attributes="attributes"
       @dayclick="handleDayClick"
     >
       <template #day-content>
@@ -14,29 +14,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "@vue/composition-api";
+import addDays from "date-fns/addDays";
 
 type Day = {
   date: Date;
 };
 
-export default defineComponent({
+export default {
   props: {
     rows: {
       type: Number,
       default: 1,
     },
   },
-  setup() {
-    const state = reactive({
+
+  data() {
+    return {
       attributes: [{ key: "today", highlight: true, dates: new Date() }],
-    });
-
-    function handleDayClick(day: Day) {
-      console.log(day);
-    }
-
-    return { state, handleDayClick };
+    };
   },
-});
+
+  methods: {
+    handleDayClick(day: Day) {
+      console.log(day);
+      const [currentAttributes] = this.attributes;
+      currentAttributes.dates = {
+        start: day.date,
+        end: addDays(day.date, 7),
+      };
+      this.$set(this.attributes, 0, currentAttributes);
+    },
+  },
+};
 </script>
