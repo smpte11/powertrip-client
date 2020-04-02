@@ -11,11 +11,12 @@
     </template>
 
     <template #body>
-      <h1 class="h1 font-bold text-gray-700">Tell us about your travel</h1>
+      <h1 class="h1 font-bold text-gray-700">Tell us more about your travel</h1>
       <p-input
         is-full
         label="What's the name of your trip?"
         placeholder="Ex. Trip to Madrid"
+        v-model="state.name"
       ></p-input>
 
       <div class="mb-4">
@@ -33,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, ref, reactive } from "@vue/composition-api";
 import { PTravelLayout } from "@/components/travel/layouts";
 
 import "@/assets/svg/icon-arrow-left";
@@ -42,11 +43,16 @@ export default defineComponent({
   components: { PTravelLayout },
 
   setup(props, ctx) {
+    const state = reactive({
+      name: "",
+    });
+
     function toTravels() {
       ctx.root.$router.push("travels");
     }
 
     return {
+      state,
       toTravels,
     };
   },

@@ -1,17 +1,19 @@
-<template functional>
+<template>
   <div class="mb-4">
     <label
-      v-if="props.label"
+      v-if="label"
       class="block text-gray-700 text-sm font-bold mb-2"
-      for="props.label"
+      for="label"
     >
-      {{ props.label }}
+      {{ label }}
     </label>
     <input
-      id="props.label"
+      id="label"
       class="shadow rounded border-0 p-3 mb-2"
-      :class="{ 'w-full': props.isFull }"
-      :placeholder="props.placeholder"
+      :class="{ 'w-full': isFull }"
+      :placeholder="placeholder"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
     />
   </div>
 </template>
@@ -25,6 +27,7 @@ export default {
       type: String,
       required: false,
     },
+    value: { type: String },
   },
 };
 </script>
