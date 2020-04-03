@@ -14,7 +14,14 @@
 </template>
 
 <script lang="ts">
-import isAfter from "date-fns/isAfter";
+import {
+  addDays,
+  isAfter,
+  isBefore,
+  isEqual,
+  closestTo,
+  isWithinInterval,
+} from "date-fns";
 
 type Day = {
   date: Date;
@@ -22,8 +29,7 @@ type Day = {
 
 type DateRange = {
   start: Date;
-  end?: Date;
-  span?: number;
+  end: Date;
 };
 
 type AttrProps = {
@@ -41,39 +47,38 @@ export default {
     },
   },
 
-  data(): { attributes: AttrProps[] } {
+  data(): {
+    attributes: AttrProps[];
+    baseAttr: Pick<AttrProps, "key" | "highlight">;
+  } {
     return {
       attributes: [{ key: "today", dot: true, dates: new Date() }],
+      baseAttr: {
+        key: "travel-range",
+        highlight: true,
+      },
     };
   },
 
   methods: {
     handleDayClick(day: Day) {
-      const attr = {
-        key: "travel-range",
-        highlight: true,
-      };
+      const { date } = day;
+
       if (this.attributes[1]?.dates) {
-        const range = this.attributes[1].dates as DateRange;
-        if (isAfter(day.date, range.start)) {
-          range.end = day.date;
-          this.attributes.splice(1, 0, {
-            ...attr,
-            dates: range,
-          });
-        } else {
-          this.attributes.splice(1, 0, {
-            ...attr,
-            dates: {
-              start: day.date,
-              end: range.start,
-            },
-          });
-        }
+        const { start, end } = this.attributes[1].dates as DateRange;
+        const closestDate = closestTo(date, [start, end]);
+        this.$set(this.attributes, 1, {
+          ...this.baseAttr,
+          dates: {
+            start: isEqual(closestDate, start) ? date : start,
+            end: isEqual(closestDate, end) ? date : end,
+          },
+        });
       } else {
+        console.log("HEY");
         this.attributes.push({
-          ...attr,
-          dates: { start: day.date },
+          ...this.baseAttr,
+          dates: { start: date, end: addDays(date, 1) },
         });
       }
     },

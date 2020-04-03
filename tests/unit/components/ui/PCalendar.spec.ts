@@ -39,20 +39,20 @@ describe("Calendar component", () => {
 
   it("should handle having the second date before the first", () => {
     const today = new Date();
-    const endDate = subDays(today, 1);
+    const secondClick = subDays(today, 1);
 
     const wrapper = mount(PCalendar, {
       localVue,
     });
 
     const from = wrapper.find(`.id-${format(today, "yyyy-MM-dd")}`);
-    const to = wrapper.find(`.id-${format(endDate, "yyyy-MM-dd")}`);
+    const to = wrapper.find(`.id-${format(secondClick, "yyyy-MM-dd")}`);
 
     from.vm.$emit("dayclick", { date: today });
-    to.vm.$emit("dayclick", { date: endDate });
+    to.vm.$emit("dayclick", { date: secondClick });
     const { start, end } = wrapper.vm.$data.attributes[1].dates;
 
-    expect(isEqual(start, endDate)).toBeTruthy();
-    expect(isEqual(end, today)).toBeTruthy();
+    expect(isEqual(start, secondClick)).toBeTruthy();
+    expect(isEqual(end, addDays(today, 1))).toBeTruthy();
   });
 });
