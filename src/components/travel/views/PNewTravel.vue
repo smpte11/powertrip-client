@@ -4,7 +4,12 @@
       <p-nav>
         <template #left>
           <p-button class="pl-0" :clickHandler="toTravels">
-            <icon height="1.5rem" width="1.5rem" icon="icon-arrow-left"></icon>
+            <icon
+              color="#4a5568"
+              height="1.5rem"
+              width="1.5rem"
+              icon="icon-arrow-left"
+            ></icon>
           </p-button>
         </template>
       </p-nav>
@@ -13,10 +18,19 @@
     <template #body>
       <h1 class="h1 font-bold text-gray-700">Tell us more about your travel</h1>
       <p-input
+        id="name"
         is-full
         label="What's the name of your trip?"
-        placeholder="Ex. Trip to Madrid"
-        v-model="state.name"
+        placeholder="Ex. Bill &amp; Ted's Excellent Adventure"
+        v-model="name"
+      ></p-input>
+
+      <p-input
+        id="destination"
+        is-full
+        label="Where are you going?"
+        placeholder="Ex. Madrid"
+        v-model="destination"
       ></p-input>
 
       <div class="mb-4">
@@ -34,25 +48,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "@vue/composition-api";
+import { defineComponent, ref } from "@vue/composition-api";
 import { PTravelLayout } from "@/components/travel/layouts";
 
 import "@/assets/svg/icon-arrow-left";
 
 export default defineComponent({
+  name: "new-travel",
   components: { PTravelLayout },
 
   setup(props, ctx) {
-    const state = reactive({
-      name: "",
-    });
+    const name = ref("");
+    const destination = ref("");
 
     function toTravels() {
       ctx.root.$router.push("travels");
     }
 
     return {
-      state,
+      name,
+      destination,
       toTravels,
     };
   },

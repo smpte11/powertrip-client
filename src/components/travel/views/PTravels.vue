@@ -4,12 +4,22 @@
       <p-nav>
         <template #left>
           <p-button class="pl-0" :clickHandler="() => {}">
-            <icon height="1.5rem" width="1.5rem" icon="icon-menu"></icon>
+            <icon
+              color="#4a5568"
+              height="1.5rem"
+              width="1.5rem"
+              icon="icon-menu"
+            ></icon>
           </p-button>
         </template>
         <template #right>
           <p-button class="pr-0" rounded :clickHandler="() => {}">
-            <icon height="1.5rem" width="1.5rem" icon="icon-user"></icon>
+            <icon
+              color="#4a5568"
+              height="1.5rem"
+              width="1.5rem"
+              icon="icon-user"
+            ></icon>
           </p-button>
         </template>
       </p-nav>

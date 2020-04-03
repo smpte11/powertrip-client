@@ -3,12 +3,12 @@
     <label
       v-if="label"
       class="block text-gray-700 text-sm font-bold mb-2"
-      for="label"
+      :for="id"
     >
       {{ label }}
     </label>
     <input
-      id="label"
+      :id="id"
       class="shadow rounded border-0 p-3 mb-2"
       :class="{ 'w-full': isFull }"
       :placeholder="placeholder"
@@ -21,6 +21,7 @@
 <script lang="ts">
 export default {
   props: {
+    id: String,
     isFull: Boolean,
     label: String,
     placeholder: {

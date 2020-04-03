@@ -11,22 +11,4 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import "~bulma/sass/utilities/_all";
-
-.day {
-  flex-direction: column;
-  height: 100%;
-}
-
-.header {
-  color: $light;
-  flex-grow: 0;
-  padding: $size-4;
-}
-
-.body {
-  border-top-left-radius: $size-6;
-  border-top-right-radius: $size-6;
-}
-</style>
+<style lang="scss" scoped></style>

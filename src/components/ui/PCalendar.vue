@@ -14,10 +14,23 @@
 </template>
 
 <script lang="ts">
-import addDays from "date-fns/addDays";
+import isAfter from "date-fns/isAfter";
 
 type Day = {
   date: Date;
+};
+
+type DateRange = {
+  start: Date;
+  end?: Date;
+  span?: number;
+};
+
+type AttrProps = {
+  key: number | string;
+  highlight?: boolean;
+  dot?: boolean;
+  dates?: Date | DateRange | Array<Date | DateRange>;
 };
 
 export default {
@@ -28,21 +41,41 @@ export default {
     },
   },
 
-  data() {
+  data(): { attributes: AttrProps[] } {
     return {
-      attributes: [{ key: "today", highlight: true, dates: new Date() }],
+      attributes: [{ key: "today", dot: true, dates: new Date() }],
     };
   },
 
   methods: {
     handleDayClick(day: Day) {
-      console.log(day);
-      const [currentAttributes] = this.attributes;
-      currentAttributes.dates = {
-        start: day.date,
-        end: addDays(day.date, 7),
+      const attr = {
+        key: "travel-range",
+        highlight: true,
       };
-      this.$set(this.attributes, 0, currentAttributes);
+      if (this.attributes[1]?.dates) {
+        const range = this.attributes[1].dates as DateRange;
+        if (isAfter(day.date, range.start)) {
+          range.end = day.date;
+          this.attributes.splice(1, 0, {
+            ...attr,
+            dates: range,
+          });
+        } else {
+          this.attributes.splice(1, 0, {
+            ...attr,
+            dates: {
+              start: day.date,
+              end: range.start,
+            },
+          });
+        }
+      } else {
+        this.attributes.push({
+          ...attr,
+          dates: { start: day.date },
+        });
+      }
     },
   },
 };
