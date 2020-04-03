@@ -41,10 +41,16 @@ type AttrProps = {
 
 export default {
   props: {
+    value: Object,
     rows: {
       type: Number,
       default: 1,
     },
+  },
+
+  model: {
+    prop: "value",
+    event: "change",
   },
 
   data(): {
@@ -62,25 +68,26 @@ export default {
 
   methods: {
     handleDayClick(day: Day) {
+      let dates;
       const { date } = day;
 
       if (this.attributes[1]?.dates) {
         const { start, end } = this.attributes[1].dates as DateRange;
         const closestDate = closestTo(date, [start, end]);
-        this.$set(this.attributes, 1, {
-          ...this.baseAttr,
-          dates: {
-            start: isEqual(closestDate, start) ? date : start,
-            end: isEqual(closestDate, end) ? date : end,
-          },
-        });
+        dates = {
+          start: isEqual(closestDate, start) ? date : start,
+          end: isEqual(closestDate, end) ? date : end,
+        };
       } else {
-        console.log("HEY");
-        this.attributes.push({
-          ...this.baseAttr,
-          dates: { start: date, end: addDays(date, 1) },
-        });
+        dates = { start: date, end: addDays(date, 1) };
       }
+
+      this.$set(this.attributes, 1, {
+        ...this.baseAttr,
+        dates,
+      });
+
+      this.$emit("change", dates);
     },
   },
 };

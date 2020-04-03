@@ -38,7 +38,7 @@
           >How long will it be?</label
         >
         <!-- Add wrapper -->
-        <p-calendar></p-calendar>
+        <p-calendar v-model="range"></p-calendar>
       </div>
     </template>
     <template #footer>
@@ -60,6 +60,7 @@ export default defineComponent({
   setup(props, ctx) {
     const name = ref("");
     const destination = ref("");
+    const range = ref({});
 
     function toTravels() {
       ctx.root.$router.push("travels");
@@ -68,6 +69,7 @@ export default defineComponent({
     return {
       name,
       destination,
+      range,
       toTravels,
     };
   },
