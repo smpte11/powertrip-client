@@ -42,7 +42,43 @@
       </div>
     </template>
     <template #footer>
-      <p-button class="bg-primary" :clickHandler="() => {}">Create</p-button>
+      <apollo-mutation
+        :mutation="
+          (gql) => gql`
+            mutation CreateTravel(
+              $name: String!
+              $destination: String!
+              $start: DateTime!
+              $end: DateTime!
+            ) {
+              createTravel(
+                travel: {
+                  name: $name
+                  destination: $destination
+                  start: $start
+                  end: $end
+                }
+              ) {
+                name
+                destination
+                start
+                end
+              }
+            }
+          `
+        "
+        :variables="{
+          name,
+          destination,
+          start: range.start,
+          end: range.end,
+        }"
+      >
+        <template #default="{ mutate }">
+          <!-- Add loading and error state later -->
+          <p-button class="bg-primary" :clickHandler="mutate">Create</p-button>
+        </template>
+      </apollo-mutation>
     </template>
   </p-travel-layout>
 </template>

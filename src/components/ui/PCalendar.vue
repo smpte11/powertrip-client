@@ -14,14 +14,7 @@
 </template>
 
 <script lang="ts">
-import {
-  addDays,
-  isAfter,
-  isBefore,
-  isEqual,
-  closestTo,
-  isWithinInterval,
-} from "date-fns";
+import { addDays, isEqual, closestTo } from "date-fns";
 
 type Day = {
   date: Date;
@@ -73,7 +66,7 @@ export default {
 
       if (this.attributes[1]?.dates) {
         const { start, end } = this.attributes[1].dates as DateRange;
-        const closestDate = closestTo(date, [start, end]);
+        const closestDate = closestTo(date, [end, start]);
         dates = {
           start: isEqual(closestDate, start) ? date : start,
           end: isEqual(closestDate, end) ? date : end,

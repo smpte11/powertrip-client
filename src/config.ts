@@ -10,7 +10,7 @@ enum ENVIRONMENTS {
 }
 
 class Config implements Configurable {
-  apiUrl = "http://localhost:4000/graphql";
+  apiUrl = "http://localhost:7071/graphql";
 }
 
 class ProdConfig extends Config {
