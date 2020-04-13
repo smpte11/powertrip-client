@@ -6,6 +6,7 @@ import "./registerServiceWorker";
 
 import router from "./router";
 
+import { InMemoryCache } from "apollo-boost";
 import { createProvider } from "./vue-apollo";
 
 import "./plugins/composition";
@@ -27,6 +28,12 @@ new Vue({
   apolloProvider: createProvider({
     httpEndpoint: config.apiUrl,
     wsEndpoint: null,
+    onCacheInit: (cache: InMemoryCache) => {
+      const data = {
+        travels: [],
+      };
+      cache.writeData({ data });
+    },
   }),
   render: (h) => h(App),
 }).$mount("#app");

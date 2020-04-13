@@ -59,6 +59,7 @@
                   end: $end
                 }
               ) {
+                id
                 name
                 destination
                 start
@@ -88,6 +89,14 @@ import { defineComponent, ref } from "@vue/composition-api";
 import { PTravelLayout } from "@/components/travel/layouts";
 
 import "@/assets/svg/icon-arrow-left";
+
+type Travel = {
+  id: number;
+  name: string;
+  destination: string;
+  start: Date;
+  end: Date;
+};
 
 export default defineComponent({
   name: "new-travel",
