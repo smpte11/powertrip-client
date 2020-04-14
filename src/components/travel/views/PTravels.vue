@@ -37,40 +37,33 @@
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
       </div>
-      <apollo-query
-        :query="require('@/components/travel/queries').TRAVELS_QUERY"
-      >
-        <template v-slot="{ result: { data } }">
-          <div v-if="data">
-            <div
-              :key="travel.id"
-              class="flex justify-between bg-white rounded shadow border-0 p-3 my-3"
-              v-for="travel in data.travels"
-            >
-              <div class="text-left">
-                <h2 class="text-xl text-gray-700">{{ travel.name }}</h2>
-                <p class="text-gray-700">{{ travel.destination }}</p>
-              </div>
-
-              <p-button rounded :clickHandler="() => {}">
-                <icon
-                  height="1.5rem"
-                  width="1.5rem"
-                  icon="icon-arrow-right"
-                ></icon>
-              </p-button>
-            </div>
+      <div v-if="result && result.travels">
+        <div
+          :key="travel.id"
+          class="flex justify-between bg-white rounded shadow border-0 p-3 my-3"
+          v-for="travel in result.travels"
+        >
+          <div class="text-left">
+            <h2 class="text-xl text-gray-700">{{ travel.name }}</h2>
+            <p class="text-gray-700">{{ travel.destination }}</p>
           </div>
-        </template>
-      </apollo-query>
+
+          <p-button rounded :clickHandler="() => {}">
+            <icon height="1.5rem" width="1.5rem" icon="icon-arrow-right"></icon>
+          </p-button>
+        </div>
+      </div>
     </template>
   </p-travel-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
+import { useQuery } from "@vue/apollo-composable";
 
 import { PTravelLayout } from "@/components/travel/layouts";
+
+import { TRAVELS_QUERY } from "@/components/travel/queries";
 
 import "@/assets/svg/icon-arrow-right";
 import "@/assets/svg/icon-menu";
@@ -81,11 +74,14 @@ export default defineComponent({
   components: { PTravelLayout },
 
   setup(props, ctx) {
+    const { result } = useQuery(TRAVELS_QUERY);
+
     function toNewTravel() {
       ctx.root.$router.push("new-travel");
     }
 
     return {
+      result,
       toNewTravel,
     };
   },
