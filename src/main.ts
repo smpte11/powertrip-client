@@ -32,8 +32,11 @@ const apolloProvider = createProvider({
 new Vue({
   router,
   apolloProvider,
+  /* eslint-disable */
+  // @ts-ignore
   setup() {
     provide(DefaultApolloClient, apolloProvider.defaultClient);
   },
+  /* eslint-disable */
   render: (h) => h(App),
 }).$mount("#app");
