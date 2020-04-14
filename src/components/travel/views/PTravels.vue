@@ -37,6 +37,32 @@
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
       </div>
+      <apollo-query
+        :query="require('@/components/travel/queries').TRAVELS_QUERY"
+      >
+        <template v-slot="{ result: { data } }">
+          <div v-if="data">
+            <div
+              :key="travel.id"
+              class="flex justify-between bg-white rounded shadow border-0 p-3 my-3"
+              v-for="travel in data.travels"
+            >
+              <div class="text-left">
+                <h2 class="text-xl text-gray-700">{{ travel.name }}</h2>
+                <p class="text-gray-700">{{ travel.destination }}</p>
+              </div>
+
+              <p-button rounded :clickHandler="() => {}">
+                <icon
+                  height="1.5rem"
+                  width="1.5rem"
+                  icon="icon-arrow-right"
+                ></icon>
+              </p-button>
+            </div>
+          </div>
+        </template>
+      </apollo-query>
     </template>
   </p-travel-layout>
 </template>
@@ -46,6 +72,7 @@ import { defineComponent } from "@vue/composition-api";
 
 import { PTravelLayout } from "@/components/travel/layouts";
 
+import "@/assets/svg/icon-arrow-right";
 import "@/assets/svg/icon-menu";
 import "@/assets/svg/icon-plus";
 import "@/assets/svg/icon-user";

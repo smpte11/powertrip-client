@@ -42,51 +42,20 @@
       </div>
     </template>
     <template #footer>
-      <apollo-mutation
-        :mutation="
-          (gql) => gql`
-            mutation CreateTravel(
-              $name: String!
-              $destination: String!
-              $start: DateTime!
-              $end: DateTime!
-            ) {
-              createTravel(
-                travel: {
-                  name: $name
-                  destination: $destination
-                  start: $start
-                  end: $end
-                }
-              ) {
-                id
-                name
-                destination
-                start
-                end
-              }
-            }
-          `
-        "
-        :variables="{
-          name,
-          destination,
-          start: range.start,
-          end: range.end,
-        }"
+      <p-button class="bg-primary" :clickHandler="createTravel"
+        >Create</p-button
       >
-        <template #default="{ mutate }">
-          <!-- Add loading and error state later -->
-          <p-button class="bg-primary" :clickHandler="mutate">Create</p-button>
-        </template>
-      </apollo-mutation>
     </template>
   </p-travel-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
+import { useMutation } from "@vue/apollo-composable";
 import { PTravelLayout } from "@/components/travel/layouts";
+
+import { ADD_TRAVEL } from "@/components/travel/mutations";
+import { TRAVELS_QUERY } from "@/components/travel/queries";
 
 import "@/assets/svg/icon-arrow-left";
 
@@ -98,6 +67,10 @@ type Travel = {
   end: Date;
 };
 
+interface TravelsResult {
+  travels: Travel[];
+}
+
 export default defineComponent({
   name: "new-travel",
   components: { PTravelLayout },
@@ -105,17 +78,45 @@ export default defineComponent({
   setup(props, ctx) {
     const name = ref("");
     const destination = ref("");
-    const range = ref({});
+    const range = ref({
+      start: undefined,
+      end: undefined,
+    });
+
+    const { mutate: createTravel, onDone } = useMutation(ADD_TRAVEL, () => ({
+      variables: {
+        name: name.value,
+        destination: destination.value,
+        ...range.value,
+      },
+      update(cache, { data: { createTravel } }) {
+        const travels = cache.readQuery<TravelsResult>({
+          query: TRAVELS_QUERY,
+        })?.travels;
+
+        if (travels) {
+          cache.writeQuery({
+            query: TRAVELS_QUERY,
+            data: {
+              travels: [...travels, createTravel],
+            },
+          });
+        }
+      },
+    }));
 
     function toTravels() {
       ctx.root.$router.push("travels");
     }
 
+    onDone(() => toTravels());
+
     return {
       name,
       destination,
-      range,
+      createTravel,
       toTravels,
+      range,
     };
   },
 });

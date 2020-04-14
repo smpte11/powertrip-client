@@ -1,4 +1,6 @@
 import Vue from "vue";
+import { provide } from "@vue/composition-api";
+import { DefaultApolloClient } from "@vue/apollo-composable";
 
 import App from "./App.vue";
 
@@ -6,7 +8,6 @@ import "./registerServiceWorker";
 
 import router from "./router";
 
-import { InMemoryCache } from "apollo-boost";
 import { createProvider } from "./vue-apollo";
 
 import "./plugins/composition";
@@ -23,17 +24,16 @@ Vue.config.productionTip = false;
 
 const config = buildConfig();
 
+const apolloProvider = createProvider({
+  httpEndpoint: config.apiUrl,
+  wsEndpoint: null,
+});
+
 new Vue({
   router,
-  apolloProvider: createProvider({
-    httpEndpoint: config.apiUrl,
-    wsEndpoint: null,
-    onCacheInit: (cache: InMemoryCache) => {
-      const data = {
-        travels: [],
-      };
-      cache.writeData({ data });
-    },
-  }),
+  apolloProvider,
+  setup() {
+    provide(DefaultApolloClient, apolloProvider.defaultClient);
+  },
   render: (h) => h(App),
 }).$mount("#app");

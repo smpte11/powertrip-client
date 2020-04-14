@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vue/apollo-composable": "^4.0.0-alpha.8",
     "@vue/composition-api": "^0.5.0",
     "apollo-boost": "^0.4.7",
     "core-js": "^3.6.5",

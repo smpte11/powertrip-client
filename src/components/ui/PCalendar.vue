@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import { addDays, isEqual, closestTo } from "date-fns";
 
 type Day = {
@@ -32,7 +33,7 @@ type AttrProps = {
   dates?: Date | DateRange | Array<Date | DateRange>;
 };
 
-export default {
+export default Vue.extend({
   props: {
     value: Object,
     rows: {
@@ -83,5 +84,5 @@ export default {
       this.$emit("change", dates);
     },
   },
-};
+});
 </script>
