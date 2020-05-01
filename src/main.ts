@@ -1,4 +1,5 @@
 import Vue from "vue";
+import { InMemoryCache } from "apollo-cache-inmemory";
 import { provide } from "@vue/composition-api";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 
@@ -24,9 +25,18 @@ Vue.config.productionTip = false;
 
 const config = buildConfig();
 
+const cache = new InMemoryCache();
+
 const apolloProvider = createProvider({
+  cache,
   httpEndpoint: config.apiUrl,
   wsEndpoint: null,
+});
+
+cache.writeData({
+  data: {
+    travels: [],
+  },
 });
 
 new Vue({
