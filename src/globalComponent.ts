@@ -1,10 +1,15 @@
 import Vue from "vue";
 
-// global registration
-import { PButton, PCalendar, PInput, PNav, PSearch } from "@/components/ui";
+const requireComponent = require.context(
+  "./components/ui",
+  false,
+  /P[A-Z]\w+\.(vue|ts)$/
+);
 
-Vue.component("p-button", PButton);
-Vue.component("p-calendar", PCalendar);
-Vue.component("p-input", PInput);
-Vue.component("p-nav", PNav);
-Vue.component("p-search", PSearch);
+requireComponent.keys().forEach((fileName) => {
+  const componentConfig = requireComponent(fileName);
+
+  const componentName = fileName.replace(/^\.\//, "").replace(/\.\w+$/, "");
+
+  Vue.component(componentName, componentConfig.default || componentConfig);
+});
