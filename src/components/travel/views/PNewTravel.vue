@@ -3,7 +3,7 @@
     <template #header>
       <p-nav>
         <template #left>
-          <p-button class="pl-0" :clickHandler="toTravels">
+          <p-button class="pl-0" :onClick="toTravels">
             <icon
               color="#4a5568"
               height="1.5rem"
@@ -15,7 +15,7 @@
       </p-nav>
     </template>
 
-    <template #body>
+    <template #content>
       <h1 class="h1 font-bold text-gray-700">Tell us more about your travel</h1>
       <p-input
         id="name"
@@ -42,9 +42,7 @@
       </div>
     </template>
     <template #footer>
-      <p-button class="bg-primary" :clickHandler="createTravel"
-        >Create</p-button
-      >
+      <p-button class="bg-primary" :onClick="createTravel">Create</p-button>
     </template>
   </p-travel-layout>
 </template>

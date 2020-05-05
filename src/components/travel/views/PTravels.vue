@@ -1,9 +1,9 @@
 <template>
-  <p-travel-layout>
+  <p-layout>
     <template #header>
       <p-nav>
         <template #left>
-          <p-button class="pl-0" :clickHandler="() => {}">
+          <p-button class="pl-0" :onClick="() => {}">
             <icon
               color="#4a5568"
               height="1.5rem"
@@ -13,7 +13,7 @@
           </p-button>
         </template>
         <template #right>
-          <p-button class="pr-0" rounded :clickHandler="() => {}">
+          <p-button class="pr-0" rounded :onClick="() => {}">
             <icon
               color="#4a5568"
               height="1.5rem"
@@ -24,44 +24,36 @@
         </template>
       </p-nav>
     </template>
-    <template #body>
+    <template #content>
       <p-search></p-search>
-      <div
-        class="flex justify-between bg-white rounded shadow border-0 p-3 my-3"
-      >
+      <p-card>
         <div class="text-left">
           <h2 class="text-xl text-gray-700">Where to next?</h2>
           <p class="text-gray-700">Plan your next adventure...</p>
         </div>
-        <p-button rounded :clickHandler="toNewTravel">
+        <p-button rounded :onClick="toNewTravel">
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
-      </div>
+      </p-card>
       <div v-if="result && result.travels">
-        <div
-          :key="travel.id"
-          class="flex justify-between bg-white rounded shadow border-0 p-3 my-3"
-          v-for="travel in result.travels"
-        >
+        <p-card :key="travel.id" v-for="travel in result.travels">
           <div class="text-left">
             <h2 class="text-xl text-gray-700">{{ travel.name }}</h2>
             <p class="text-gray-700">{{ travel.destination }}</p>
           </div>
 
-          <p-button rounded :clickHandler="() => {}">
+          <p-button rounded :onClick="() => {}">
             <icon height="1.5rem" width="1.5rem" icon="icon-arrow-right"></icon>
           </p-button>
-        </div>
+        </p-card>
       </div>
     </template>
-  </p-travel-layout>
+  </p-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import { useQuery } from "@vue/apollo-composable";
-
-import { PTravelLayout } from "@/components/travel/layouts";
 
 import { TRAVELS_QUERY } from "@/components/travel/queries";
 
@@ -71,8 +63,6 @@ import "@/assets/svg/icon-plus";
 import "@/assets/svg/icon-user";
 
 export default defineComponent({
-  components: { PTravelLayout },
-
   setup(props, ctx) {
     const { result } = useQuery(TRAVELS_QUERY);
 

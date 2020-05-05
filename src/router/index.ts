@@ -1,15 +1,15 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
-import PDay from "@/components/day/PDay.vue";
+import VueRouter, { RouteConfig } from "vue-router";
 
 import { PNewTravel, PTravels } from "@/components/travel/views";
+import { PSignup } from "@/components/user/views";
 
 Vue.use(VueRouter);
 
-const routes = [
+const routes: RouteConfig[] = [
   {
-    path: "/day",
-    component: PDay,
+    path: "/signup",
+    component: PSignup,
   },
   {
     path: "/travels",

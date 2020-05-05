@@ -8,7 +8,7 @@ describe("Button component", () => {
         default: "This is a test",
       },
       props: {
-        clickHandler: () => {},
+        onClick: () => {},
       },
     });
 
@@ -16,19 +16,19 @@ describe("Button component", () => {
   });
 
   it("should handle clicks", async () => {
-    const clickHandler = jest.fn();
+    const onClick = jest.fn();
 
     const { getByText } = render(PButton, {
       slots: {
         default: "This is a test",
       },
       props: {
-        clickHandler,
+        onClick,
       },
     });
 
     await fireEvent.click(getByText("This is a test"));
 
-    expect(clickHandler).toBeCalled();
+    expect(onClick).toBeCalled();
   });
 });

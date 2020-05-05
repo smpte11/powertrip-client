@@ -1,15 +1,15 @@
 <template>
-  <p-day-layout>
+  <p-layout>
     <template #header>
       <p-day-overview />
     </template>
-    <template #body>
+    <template #content>
       <p-day-weather />
       <b-button rounded type="is-primary" icon-left="plus" class="is-fullwidth"
         >Add new activity</b-button
       >
     </template>
-  </p-day-layout>
+  </p-layout>
 </template>
 
 <script lang="ts">
