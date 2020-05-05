@@ -26,7 +26,7 @@
     </template>
     <template #content>
       <p-search></p-search>
-      <p-card>
+      <p-card #card-content>
         <div class="text-left">
           <h2 class="text-xl text-gray-700">Where to next?</h2>
           <p class="text-gray-700">Plan your next adventure...</p>
@@ -36,7 +36,7 @@
         </p-button>
       </p-card>
       <div v-if="result && result.travels">
-        <p-card :key="travel.id" v-for="travel in result.travels">
+        <p-card #card-content :key="travel.id" v-for="travel in result.travels">
           <div class="text-left">
             <h2 class="text-xl text-gray-700">{{ travel.name }}</h2>
             <p class="text-gray-700">{{ travel.destination }}</p>
