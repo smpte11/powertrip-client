@@ -50,7 +50,6 @@
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import { useMutation } from "@vue/apollo-composable";
-import { PTravelLayout } from "@/components/travel/layouts";
 
 import { ADD_TRAVEL } from "@/components/travel/mutations";
 import { TRAVELS_QUERY } from "@/components/travel/queries";
@@ -71,7 +70,6 @@ interface TravelsResult {
 
 export default defineComponent({
   name: "new-travel",
-  components: { PTravelLayout },
 
   setup(props, ctx) {
     const name = ref("");

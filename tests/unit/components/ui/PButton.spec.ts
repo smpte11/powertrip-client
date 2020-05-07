@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/vue";
-import { PButton } from "@/components/ui";
+import PButton from "@/components/ui/PButton.vue";
 
 describe("Button component", () => {
   it("should render properly", () => {

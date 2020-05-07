@@ -4,7 +4,7 @@ import VCalendar from "v-calendar";
 import { createLocalVue, mount } from "@vue/test-utils";
 import { addDays, subDays, format, isEqual } from "date-fns";
 
-import { PCalendar } from "@/components/ui";
+import PCalendar from "@/components/ui/PCalendar.vue";
 
 const localVue = createLocalVue();
 localVue.use(CompositionApi);
