@@ -6,6 +6,7 @@ hr {
   @apply my-4;
   border: 0;
   height: 2px;
+  width: 25%;
   background-image: linear-gradient(
     to right,
     color(theme("colors.gray.300") a(0%)),

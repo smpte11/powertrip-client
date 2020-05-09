@@ -22,8 +22,8 @@ describe("Button component", () => {
       slots: {
         default: "This is a test",
       },
-      props: {
-        onClick,
+      listeners: {
+        click: onClick,
       },
     });
 

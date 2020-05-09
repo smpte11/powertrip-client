@@ -36,7 +36,7 @@ export default Vue.extend({
       type: String,
       default: "text",
       validator: (inputType) =>
-        ["email", "text", "password"].includes(inputType),
+        ["email", "password", "search", "text"].includes(inputType),
     },
     placeholder: {
       type: String,

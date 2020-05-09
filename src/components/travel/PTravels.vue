@@ -3,7 +3,7 @@
     <template #header>
       <p-nav>
         <template #left>
-          <p-button class="pl-0" :onClick="() => {}">
+          <p-button class="pl-0" @click="() => {}">
             <icon
               color="#4a5568"
               height="1.5rem"
@@ -13,7 +13,7 @@
           </p-button>
         </template>
         <template #right>
-          <p-button class="pr-0" rounded :onClick="() => {}">
+          <p-button class="pr-0" rounded @click="() => {}">
             <icon
               color="#4a5568"
               height="1.5rem"
@@ -31,7 +31,7 @@
           <h2 class="text-xl text-gray-700">Where to next?</h2>
           <p class="text-gray-700">Plan your next adventure...</p>
         </div>
-        <p-button rounded :onClick="toNewTravel">
+        <p-button rounded @click="toNewTravel">
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
       </p-card>
@@ -42,7 +42,7 @@
             <p class="text-gray-700">{{ travel.destination }}</p>
           </div>
 
-          <p-button rounded :onClick="() => {}">
+          <p-button rounded @click="() => {}">
             <icon height="1.5rem" width="1.5rem" icon="icon-arrow-right"></icon>
           </p-button>
         </p-card>
@@ -63,11 +63,11 @@ import "@/assets/svg/icon-plus";
 import "@/assets/svg/icon-user";
 
 export default defineComponent({
-  setup(props, ctx) {
+  setup(props, { root }) {
     const { result } = useQuery(TRAVELS_QUERY);
 
     function toNewTravel() {
-      ctx.root.$router.push("new-travel");
+      root.$router.push("new-travel");
     }
 
     return {

@@ -1,51 +1,31 @@
 import Vue from "vue";
-import { InMemoryCache } from "apollo-cache-inmemory";
 import { provide } from "@vue/composition-api";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 
-import App from "./App.vue";
+import App from "@/App.vue";
+import router from "@/router";
 
-import "./registerServiceWorker";
+import apolloClient from "@/apollo";
 
-import router from "./router";
+import { provideAuth } from "@/components/user/useAuth";
 
-import { createProvider } from "./vue-apollo";
-
-import "./plugins/composition";
-import "./plugins/icons";
-import "./plugins/vcalendar";
-
-import "./globalComponent";
-
-import buildConfig from "./config";
+import "@/registerServiceWorker";
+import "@/plugins/composition";
+import "@/plugins/icons";
+import "@/plugins/vcalendar";
+import "@/globalComponent";
 
 import "@/assets/css/index.css";
 
 Vue.config.productionTip = false;
 
-const config = buildConfig();
-
-const cache = new InMemoryCache();
-
-const apolloProvider = createProvider({
-  cache,
-  httpEndpoint: config.apiUrl,
-  wsEndpoint: null,
-});
-
-cache.writeData({
-  data: {
-    travels: [],
-  },
-});
-
 new Vue({
   router,
-  apolloProvider,
   /* eslint-disable */
   // @ts-ignore
   setup() {
-    provide(DefaultApolloClient, apolloProvider.defaultClient);
+    provideAuth();
+    provide(DefaultApolloClient, apolloClient);
   },
   /* eslint-disable */
   render: (h) => h(App),

@@ -3,7 +3,7 @@
     <template #header>
       <p-nav>
         <template #left>
-          <p-button class="pl-0" :onClick="toTravels">
+          <p-button class="pl-0" @click="toTravels">
             <icon
               color="#4a5568"
               height="1.5rem"
@@ -42,7 +42,7 @@
       </div>
     </template>
     <template #footer>
-      <p-button class="bg-primary" :onClick="createTravel">Create</p-button>
+      <p-button class="bg-primary" @click="createTravel">Create</p-button>
     </template>
   </p-travel-layout>
 </template>
