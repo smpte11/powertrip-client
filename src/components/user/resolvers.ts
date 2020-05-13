@@ -2,8 +2,13 @@ import gql from "graphql-tag";
 
 const typeDefs = gql`
   type User {
-    email: String
-    token: String
+    id: ID!
+    email: String!
+    token: String!
+  }
+
+  type Query {
+    user: User
   }
 `;
 

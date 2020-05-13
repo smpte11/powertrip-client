@@ -6,9 +6,9 @@ import {
   provide,
   reactive,
   toRefs,
-  watchEffect,
-  watch,
 } from "@vue/composition-api";
+
+import apolloClient from "@/apollo";
 
 type Email = string;
 type Password = string;
@@ -28,6 +28,16 @@ function useProvideAuth() {
         .auth()
         .createUserWithEmailAndPassword(email, password);
       state.token = await response.user?.getIdToken();
+      apolloClient.writeData({
+        data: {
+          user: {
+            __typename: "User",
+            id: response.user?.uid,
+            email: response.user?.email,
+            token: await response.user?.getIdToken(),
+          },
+        },
+      });
     } catch (error) {
       state.error = error;
     }
@@ -39,6 +49,16 @@ function useProvideAuth() {
         .auth()
         .signInWithEmailAndPassword(email, password);
       state.token = await response.user?.getIdToken();
+      apolloClient.writeData({
+        data: {
+          user: {
+            __typename: "User",
+            id: response.user?.uid,
+            email: response.user?.email,
+            token: await response.user?.getIdToken(),
+          },
+        },
+      });
     } catch (error) {
       state.error = error;
     }

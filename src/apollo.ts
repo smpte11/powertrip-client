@@ -11,16 +11,18 @@ const httpLink = createHttpLink({
 
 const cache = new InMemoryCache();
 
-cache.writeData({
+const apolloClient = new ApolloClient({
+  cache,
+  link: httpLink,
+  typeDefs,
+  resolvers: {},
+  connectToDevTools: true,
+});
+
+apolloClient.writeData({
   data: {
     travels: [],
   },
-});
-
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-  typeDefs,
 });
 
 export default apolloClient;

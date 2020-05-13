@@ -13,6 +13,7 @@ import "@/registerServiceWorker";
 import "@/plugins/composition";
 import "@/plugins/icons";
 import "@/plugins/vcalendar";
+import "@/plugins/vue-apollo";
 import "@/globalComponent";
 
 import "@/assets/css/index.css";
