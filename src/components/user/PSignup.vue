@@ -3,7 +3,10 @@
     <p-fullscreen-layout>
       <template #content>
         <div class="flex flex-grow flex-col justify-center items-center">
-          <div class="title-up mb-6" :class="{ 'title-up--on': showSignup }">
+          <div
+            class="title-up mb-6"
+            :class="{ 'title-up--on': showSignup || showSignin }"
+          >
             <h1 class="text-6xl md:text-8xl font-bold text-gray-300">
               Powertrip
             </h1>

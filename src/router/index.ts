@@ -1,11 +1,12 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import gql from "graphql-tag";
 
-import apolloClient from "@/apollo";
+import { GET_USER } from "@/components/user/queries";
 
 import { PNewTravel, PTravels } from "@/components/travel";
 import { PSignup } from "@/components/user/";
+
+import config from "@/config";
 
 Vue.use(VueRouter);
 
@@ -19,20 +20,12 @@ const routes: RouteConfig[] = [
     path: "/travels",
     name: "travels",
     component: PTravels,
-    beforeEnter() {
-      const query = gql`
-        query GetUser {
-          user {
-            id
-            token
-            email
-          }
-        }
-      `;
-      const data = apolloClient.readQuery({
-        query,
+    beforeEnter(_to, _from, next) {
+      const data = config.apolloClient.readQuery({
+        query: GET_USER,
       });
-      console.log(data);
+      if (!data.user.token) next({ name: "signup", replace: true });
+      else next();
     },
   },
   {

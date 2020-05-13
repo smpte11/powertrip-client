@@ -5,9 +5,10 @@ const typeDefs = gql`
     id: ID!
     email: String!
     token: String!
+    displayName: String
   }
 
-  type Query {
+  extend type Query {
     user: User
   }
 `;

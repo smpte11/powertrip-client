@@ -1,11 +1,10 @@
 import Vue from "vue";
+import VueApollo from "@vue/apollo-option";
 import { provide } from "@vue/composition-api";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 
 import App from "@/App.vue";
 import router from "@/router";
-
-import apolloClient from "@/apollo";
 
 import { provideAuth } from "@/components/user/useAuth";
 
@@ -17,16 +16,22 @@ import "@/plugins/vue-apollo";
 import "@/globalComponent";
 
 import "@/assets/css/index.css";
+import config from "./config";
 
 Vue.config.productionTip = false;
 
+const apolloProvider = new VueApollo({
+  defaultClient: config.apolloClient,
+});
+
 new Vue({
   router,
+  apolloProvider,
   /* eslint-disable */
   // @ts-ignore
   setup() {
     provideAuth();
-    provide(DefaultApolloClient, apolloClient);
+    provide(DefaultApolloClient, config.apolloClient);
   },
   /* eslint-disable */
   render: (h) => h(App),

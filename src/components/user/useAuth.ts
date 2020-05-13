@@ -8,7 +8,7 @@ import {
   toRefs,
 } from "@vue/composition-api";
 
-import apolloClient from "@/apollo";
+import config, { TOKEN_KEY } from "@/config";
 
 type Email = string;
 type Password = string;
@@ -24,17 +24,21 @@ function useProvideAuth() {
   async function signup(email: Email, password: Password) {
     // NOTE weird behaviour with 400 that doesn't throw...
     try {
-      const response = await firebase
+      const { user } = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      state.token = await response.user?.getIdToken();
-      apolloClient.writeData({
+      const token = await user?.getIdToken();
+
+      if (!token) throw Error("No auth token available");
+
+      localStorage.setItem(TOKEN_KEY, token);
+      config.apolloClient.writeData({
         data: {
           user: {
             __typename: "User",
-            id: response.user?.uid,
-            email: response.user?.email,
-            token: await response.user?.getIdToken(),
+            id: user?.uid,
+            email: user?.email,
+            token,
           },
         },
       });
@@ -45,17 +49,22 @@ function useProvideAuth() {
 
   async function signin(email: Email, password: Password) {
     try {
-      const response = await firebase
+      const { user } = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password);
-      state.token = await response.user?.getIdToken();
-      apolloClient.writeData({
+
+      const token = await user?.getIdToken();
+
+      if (!token) throw Error("No auth token available");
+
+      localStorage.setItem(TOKEN_KEY, token);
+      config.apolloClient.writeData({
         data: {
           user: {
             __typename: "User",
-            id: response.user?.uid,
-            email: response.user?.email,
-            token: await response.user?.getIdToken(),
+            id: user?.uid,
+            email: user?.email,
+            token,
           },
         },
       });

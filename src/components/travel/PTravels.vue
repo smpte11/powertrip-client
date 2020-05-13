@@ -35,8 +35,8 @@
           <icon height="1.5rem" width="1.5rem" icon="icon-plus"></icon>
         </p-button>
       </p-card>
-      <div v-if="result && result.travels">
-        <p-card #card-content :key="travel.id" v-for="travel in result.travels">
+      <div v-if="travels">
+        <p-card #card-content :key="travel.id" v-for="travel in travels">
           <div class="text-left">
             <h2 class="text-xl text-gray-700">{{ travel.name }}</h2>
             <p class="text-gray-700">{{ travel.destination }}</p>
@@ -53,9 +53,10 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { useQuery } from "@vue/apollo-composable";
+import { useQuery, useResult } from "@vue/apollo-composable";
 
 import { TRAVELS_QUERY } from "@/components/travel/queries";
+import { GET_USER } from "@/components/user/queries";
 
 import "@/assets/svg/icon-arrow-right";
 import "@/assets/svg/icon-menu";
@@ -64,14 +65,25 @@ import "@/assets/svg/icon-user";
 
 export default defineComponent({
   setup(props, { root }) {
-    const { result } = useQuery(TRAVELS_QUERY);
+    const { result: userResult } = useQuery(GET_USER);
+    const user = useResult(userResult);
+
+    const { result: travelResult } = useQuery(TRAVELS_QUERY, undefined, {
+      fetchPolicy: "cache-and-network",
+      context: {
+        headers: {
+          Authorization: `Bearer ${user.value.token}`,
+        },
+      },
+    });
+    const travels = useResult(travelResult);
 
     function toNewTravel() {
       root.$router.push("new-travel");
     }
 
     return {
-      result,
+      travels,
       toNewTravel,
     };
   },

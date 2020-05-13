@@ -1,9 +1,17 @@
 import * as firebase from "firebase/app";
+import ApolloClient from "apollo-client";
+
+import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
+import { createHttpLink } from "apollo-link-http";
+import { setContext } from "apollo-link-context";
+import { typeDefs } from "./components/user";
+
 import { match } from "./fp";
 
 import "firebase/auth";
 
 export interface Configurable {
+  apolloClient: ApolloClient<NormalizedCacheObject>;
   readonly apiUrl: string;
 }
 
@@ -12,8 +20,11 @@ enum ENVIRONMENTS {
   PROD = "production",
 }
 
+export const TOKEN_KEY = "apollo-token";
+
 class Config implements Configurable {
   apiUrl = "http://localhost:7071/graphql";
+  apolloClient: ApolloClient<NormalizedCacheObject>;
 
   constructor() {
     const firebaseConfig = {
@@ -27,6 +38,28 @@ class Config implements Configurable {
       measurementId: "G-105H5NF50P",
     };
     firebase.initializeApp(firebaseConfig);
+
+    const authLink = setContext((_, { headers }) => {
+      const token = localStorage.getItem(TOKEN_KEY);
+      return {
+        headers: {
+          ...headers,
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      };
+    });
+
+    this.apolloClient = new ApolloClient({
+      cache: new InMemoryCache(),
+      link: authLink.concat(
+        createHttpLink({
+          uri: this.apiUrl,
+        })
+      ),
+      typeDefs: typeDefs,
+      resolvers: {},
+      connectToDevTools: process.env.NODE_ENV !== ENVIRONMENTS.PROD,
+    });
   }
 }
 
