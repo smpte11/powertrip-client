@@ -13,13 +13,11 @@ import config, { TOKEN_KEY } from "@/config";
 type Email = string;
 type Password = string;
 type State = {
-  user: firebase.User | null;
-  token?: string;
   error?: Error;
 };
 
 function useProvideAuth() {
-  const state = reactive<State>({ user: null });
+  const state = reactive<State>({});
 
   async function signup(email: Email, password: Password) {
     // NOTE weird behaviour with 400 that doesn't throw...
@@ -34,11 +32,11 @@ function useProvideAuth() {
       localStorage.setItem(TOKEN_KEY, token);
       config.apolloClient.writeData({
         data: {
+          isLoggedIn: !!token,
           user: {
             __typename: "User",
             id: user?.uid,
             email: user?.email,
-            token,
           },
         },
       });
@@ -60,11 +58,11 @@ function useProvideAuth() {
       localStorage.setItem(TOKEN_KEY, token);
       config.apolloClient.writeData({
         data: {
+          isLoggedIn: !!token,
           user: {
             __typename: "User",
             id: user?.uid,
             email: user?.email,
-            token,
           },
         },
       });
@@ -74,17 +72,25 @@ function useProvideAuth() {
   }
 
   firebase.auth().onAuthStateChanged((user) => {
+    const token = localStorage.getItem(TOKEN_KEY);
     if (user) {
-      state.user = user;
+      config.apolloClient.writeData({
+        data: {
+          isLoggedIn: !!token,
+          user: {
+            __typename: "User",
+            id: user?.uid,
+            email: user?.email,
+          },
+        },
+      });
     } else {
-      state.user = null;
+      config.apolloClient.clearStore();
+      localStorage.removeItem(TOKEN_KEY);
     }
   });
 
-  const isLogged = computed(() => !!state.user && !!state.token);
-
   return {
-    isLogged,
     signin,
     signup,
     ...toRefs(state),

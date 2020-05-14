@@ -60,6 +60,13 @@ class Config implements Configurable {
       resolvers: {},
       connectToDevTools: process.env.NODE_ENV !== ENVIRONMENTS.PROD,
     });
+
+    this.apolloClient.cache.writeData({
+      data: {
+        isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
+        travels: [],
+      },
+    });
   }
 }
 

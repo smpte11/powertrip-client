@@ -56,7 +56,6 @@ import { defineComponent } from "@vue/composition-api";
 import { useQuery, useResult } from "@vue/apollo-composable";
 
 import { TRAVELS_QUERY } from "@/components/travel/queries";
-import { GET_USER } from "@/components/user/queries";
 
 import "@/assets/svg/icon-arrow-right";
 import "@/assets/svg/icon-menu";
@@ -65,18 +64,10 @@ import "@/assets/svg/icon-user";
 
 export default defineComponent({
   setup(props, { root }) {
-    const { result: userResult } = useQuery(GET_USER);
-    const user = useResult(userResult);
-
-    const { result: travelResult } = useQuery(TRAVELS_QUERY, undefined, {
+    const { result } = useQuery(TRAVELS_QUERY, undefined, {
       fetchPolicy: "cache-and-network",
-      context: {
-        headers: {
-          Authorization: `Bearer ${user.value.token}`,
-        },
-      },
     });
-    const travels = useResult(travelResult);
+    const travels = useResult(result);
 
     function toNewTravel() {
       root.$router.push("new-travel");
