@@ -71,6 +71,16 @@ function useProvideAuth() {
     }
   }
 
+  async function signout() {
+    try {
+      await firebase.auth().signOut();
+      config.apolloClient.clearStore();
+      localStorage.removeItem(TOKEN_KEY);
+    } catch (error) {
+      state.error = error;
+    }
+  }
+
   firebase.auth().onAuthStateChanged((user) => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (user) {
@@ -93,6 +103,7 @@ function useProvideAuth() {
   return {
     signin,
     signup,
+    signout,
     ...toRefs(state),
   };
 }
