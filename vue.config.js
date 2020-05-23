@@ -6,4 +6,7 @@ module.exports = {
       lintGQL: false,
     },
   },
+  configureWebpack: {
+    devtool: "source-map",
+  },
 };

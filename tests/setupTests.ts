@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import fetch from "jest-fetch-mock";
 
 (global as any).navigator.geolocation = {
   clearWatch: jest.fn(),
@@ -23,3 +24,5 @@ import "@testing-library/jest-dom";
       removeListener: function () {},
     };
   };
+
+fetch.enableMocks();

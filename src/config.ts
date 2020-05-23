@@ -4,7 +4,7 @@ import ApolloClient from "apollo-client";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
-import { typeDefs } from "./components/user";
+import resolvers, { typeDefs } from "./components/user/resolvers";
 
 import { match } from "./fp";
 
@@ -20,9 +20,9 @@ enum ENVIRONMENTS {
   PROD = "production",
 }
 
-export const TOKEN_KEY = "apollo-token";
-
 class Config implements Configurable {
+  public TOKEN_KEY = "apollo-token";
+
   apiUrl = "http://localhost:7071/graphql";
   apolloClient: ApolloClient<NormalizedCacheObject>;
 
@@ -40,7 +40,7 @@ class Config implements Configurable {
     firebase.initializeApp(firebaseConfig);
 
     const authLink = setContext((_, { headers }) => {
-      const token = localStorage.getItem(TOKEN_KEY);
+      const token = localStorage.getItem(this.TOKEN_KEY);
       return {
         headers: {
           ...headers,
@@ -57,13 +57,16 @@ class Config implements Configurable {
         })
       ),
       typeDefs: typeDefs,
-      resolvers: {},
+      resolvers,
       connectToDevTools: process.env.NODE_ENV !== ENVIRONMENTS.PROD,
     });
 
     this.apolloClient.cache.writeData({
       data: {
-        isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
+        isLoggedIn: !!localStorage.getItem(this.TOKEN_KEY),
+        me: {
+          __typename: "User",
+        },
         travels: [],
       },
     });

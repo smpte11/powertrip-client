@@ -8,16 +8,17 @@ import {
   toRefs,
 } from "@vue/composition-api";
 
-import config, { TOKEN_KEY } from "@/config";
+import config from "@/config";
 
 type Email = string;
 type Password = string;
 type State = {
+  loading: boolean;
   error?: Error;
 };
 
 function useProvideAuth() {
-  const state = reactive<State>({});
+  const state = reactive<State>({ loading: true });
 
   async function signup(email: Email, password: Password) {
     // NOTE weird behaviour with 400 that doesn't throw...
@@ -29,11 +30,11 @@ function useProvideAuth() {
 
       if (!token) throw Error("No auth token available");
 
-      localStorage.setItem(TOKEN_KEY, token);
+      localStorage.setItem(config.TOKEN_KEY, token);
       config.apolloClient.writeData({
         data: {
           isLoggedIn: !!token,
-          user: {
+          me: {
             __typename: "User",
             id: user?.uid,
             email: user?.email,
@@ -55,11 +56,11 @@ function useProvideAuth() {
 
       if (!token) throw Error("No auth token available");
 
-      localStorage.setItem(TOKEN_KEY, token);
+      localStorage.setItem(config.TOKEN_KEY, token);
       config.apolloClient.writeData({
         data: {
           isLoggedIn: !!token,
-          user: {
+          me: {
             __typename: "User",
             id: user?.uid,
             email: user?.email,
@@ -75,19 +76,19 @@ function useProvideAuth() {
     try {
       await firebase.auth().signOut();
       config.apolloClient.clearStore();
-      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(config.TOKEN_KEY);
     } catch (error) {
       state.error = error;
     }
   }
 
   firebase.auth().onAuthStateChanged((user) => {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = localStorage.getItem(config.TOKEN_KEY);
     if (user) {
       config.apolloClient.writeData({
         data: {
           isLoggedIn: !!token,
-          user: {
+          me: {
             __typename: "User",
             id: user?.uid,
             email: user?.email,
@@ -96,8 +97,9 @@ function useProvideAuth() {
       });
     } else {
       config.apolloClient.clearStore();
-      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(config.TOKEN_KEY);
     }
+    state.loading = false;
   });
 
   return {

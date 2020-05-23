@@ -17,6 +17,7 @@ import "@/globalComponent";
 
 import "@/assets/css/index.css";
 import config from "./config";
+import firebase from "firebase";
 
 Vue.config.productionTip = false;
 

@@ -6,9 +6,9 @@ export const IS_LOGGED_IN = gql`
   }
 `;
 
-export const GET_USER = gql`
-  query GetUser {
-    user @client {
+export const ME = gql`
+  query Me {
+    me @client {
       id
       email
     }
