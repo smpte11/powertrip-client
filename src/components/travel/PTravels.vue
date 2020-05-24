@@ -65,12 +65,13 @@ import "@/assets/svg/icon-user";
 
 export default defineComponent({
   setup(props, { root }) {
-    const { result: me } = useQuery(ME);
+    const { result: meResult } = useQuery(ME);
+    const me = useResult(meResult);
 
-    const { result } = useQuery(TRAVELS_QUERY, undefined, {
+    const { result: travelResult } = useQuery(TRAVELS_QUERY, undefined, {
       fetchPolicy: "cache-and-network",
     });
-    const travels = useResult(result);
+    const travels = useResult(travelResult);
 
     function toNewTravel() {
       root.$router.push("new-travel");
