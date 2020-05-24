@@ -1,9 +1,10 @@
 <template>
   <transition>
-    <p-loader
-      v-if="loading && requiresAuth"
-      data-testid="auth-loader"
-    ></p-loader>
+    <p-fullscreen-layout class="justify-center" v-if="loading && requiresAuth">
+      <template #content>
+        <p-loader data-testid="auth-loader"></p-loader>
+      </template>
+    </p-fullscreen-layout>
     <router-view v-else />
   </transition>
 </template>
