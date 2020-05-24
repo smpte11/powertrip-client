@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <p-fullscreen-layout class="justify-center" v-if="loading && requiresAuth">
+    <p-fullscreen-layout class="justify-center" v-if="shouldShowLoading">
       <template #content>
         <p-loader data-testid="auth-loader"></p-loader>
       </template>
@@ -15,13 +15,14 @@ import { useAuth } from "./components/user";
 
 export default defineComponent({
   setup(_, { root }) {
+    // TODO maybe put require
     const { loading } = useAuth();
 
-    const requiresAuth = computed(
-      () => root.$router.currentRoute?.meta.requiresAuth
+    const shouldShowLoading = computed(
+      () => root.$router.currentRoute?.meta.requiresAuth && loading.value
     );
 
-    return { loading, requiresAuth };
+    return { shouldShowLoading };
   },
 });
 </script>
