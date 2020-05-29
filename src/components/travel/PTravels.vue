@@ -13,14 +13,7 @@
           </p-button>
         </template>
         <template #right>
-          <p-button class="pr-0" rounded @click="() => {}">
-            <icon
-              color="#4a5568"
-              height="1.5rem"
-              width="1.5rem"
-              icon="icon-user"
-            ></icon>
-          </p-button>
+          <p-signout-button></p-signout-button>
         </template>
       </p-nav>
     </template>
@@ -55,6 +48,8 @@
 import { defineComponent } from "@vue/composition-api";
 import { useQuery, useResult } from "@vue/apollo-composable";
 
+import { PSignoutButton } from "@/components/user";
+
 import { TRAVELS_QUERY } from "@/components/travel/queries";
 import { ME } from "@/components/user/queries";
 
@@ -64,6 +59,9 @@ import "@/assets/svg/icon-plus";
 import "@/assets/svg/icon-user";
 
 export default defineComponent({
+  components: {
+    PSignoutButton,
+  },
   setup(props, { root }) {
     const { result: meResult } = useQuery(ME);
     const me = useResult(meResult);

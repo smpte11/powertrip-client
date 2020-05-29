@@ -1,6 +1,5 @@
 import * as firebase from "firebase/app";
 import {
-  computed,
   inject,
   InjectionKey,
   provide,
@@ -75,8 +74,13 @@ function useProvideAuth() {
   async function signout() {
     try {
       await firebase.auth().signOut();
-      config.apolloClient.clearStore();
+      await config.apolloClient.clearStore();
       localStorage.removeItem(config.TOKEN_KEY);
+      config.apolloClient.writeData({
+        data: {
+          isLoggedIn: false,
+        },
+      });
     } catch (error) {
       state.error = error;
     }

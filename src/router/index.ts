@@ -48,6 +48,10 @@ router.beforeEach(function (to, _from, next) {
     query: IS_LOGGED_IN,
   });
 
+  if (!data) {
+    next({ name: Routes.Signup, replace: true });
+  }
+
   const isLoggedIn = data.isLoggedIn;
 
   if (isLoggedIn && !to.meta.requiresAuth)
