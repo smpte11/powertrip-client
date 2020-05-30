@@ -86,7 +86,7 @@ function useProvideAuth() {
     }
   }
 
-  firebase.auth().onAuthStateChanged((user) => {
+  firebase.auth().onIdTokenChanged((user) => {
     const token = localStorage.getItem(config.TOKEN_KEY);
     if (user) {
       config.apolloClient.writeData({
